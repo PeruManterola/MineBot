@@ -42,7 +42,7 @@ namespace MineBot
 
             Commands = Client.UseCommandsNext(commandsConfig);
 
-            Commands.RegisterCommands<TestCommands>();
+            Commands.RegisterCommands<MinecraftCommands>();
 
             await Client.ConnectAsync();
             await Task.Delay(-1);
