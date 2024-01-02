@@ -9,7 +9,7 @@ namespace MineBot.commands
     public class MinecraftCommands : BaseCommandModule
     {
         [Command("ip")]
-        [RequireRoles(RoleCheckMode.MatchNames, "tonto")]
+        [RequireRoles(RoleCheckMode.MatchNames, "Minecrafters")]
         public async Task GetIp(CommandContext ctx)
         {
             WebClient webClient = new WebClient();
@@ -19,6 +19,7 @@ namespace MineBot.commands
         }
 
         [Command("status")]
+        [RequireRoles(RoleCheckMode.MatchNames, "Minecrafters")]
         public async Task CheckServerStatus(CommandContext ctx)
         {
 
