@@ -49,7 +49,7 @@ namespace MineBot.commands
             }
             else if (ms.ServerUp == false)
             {
-                statusMessage.AddField("Status", "Online :red_circle:", true);
+                statusMessage.AddField("Status", "Offline :red_circle: :rage: ", true);
                 await ctx.Channel.SendMessageAsync(embed: statusMessage);
             }
             else
