@@ -1,4 +1,5 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using CliWrap;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using MineStatLib;
@@ -22,8 +23,6 @@ namespace MineBot.commands
         [RequireRoles(RoleCheckMode.MatchNames, "Minecrafters")]
         public async Task CheckServerStatus(CommandContext ctx)
         {
-
-            //ip externo 207.188.191.8
             await ctx.Channel.SendMessageAsync("Checking Status...");
             MineStat ms = new MineStat("192.168.1.137", 25565);
 
@@ -57,6 +56,14 @@ namespace MineBot.commands
                 await ctx.Channel.SendMessageAsync("minestat not working properly");
             }
 
+        }
+
+        [Command("stopServer")]
+        [RequireRoles(RoleCheckMode.MatchNames, "Minecrafters")]
+        public async Task StopServer(CommandContext ctx)
+        {
+            ctx.Channel.SendMessageAsync("Trying to shutdown server");
+            await Cli.Wrap("~/minecraft/stop").ExecuteAsync();
         }
     }
 }
