@@ -79,7 +79,8 @@ namespace MineBot.commands
                 Description = "This might take a few minutes, the Bot won't work for a minute as well.",
                 Color = DiscordColor.SpringGreen
             };
-            
+
+            await ctx.Channel.SendMessageAsync(embed: statusMessage);
 
             await Cli.Wrap("sudo")
                 .WithArguments("reboot")
