@@ -62,7 +62,7 @@ namespace MineBot.commands
         [RequireRoles(RoleCheckMode.MatchNames, "Minecrafters")]
         public async Task StopServer(CommandContext ctx)
         {
-            ctx.Channel.SendMessageAsync("Trying to shutdown server");
+            await ctx.Channel.SendMessageAsync("Trying to shutdown server");
             await Cli.Wrap("dash")
                 .WithArguments("stop")
                 .WithWorkingDirectory("/home/peru/minecraft")
@@ -76,20 +76,16 @@ namespace MineBot.commands
             var statusMessage = new DiscordEmbedBuilder
             {
                 Title = $"Starting Server...",
-                Description = "This might take a few minutes, the Bot won't work for a minute as well.",
+                Description = "This might take a few minutes, you can check if it's Online with the !status command.",
                 Color = DiscordColor.SpringGreen
             };
 
             await ctx.Channel.SendMessageAsync(embed: statusMessage);
 
-            await Cli.Wrap("sudo")
-                .WithArguments("reboot")
-                .WithCredentials(creds => creds
-                .SetUserName("peru")
-                .SetPassword("pmfOzzy0488")
-                )
-                .WithWorkingDirectory("/home/peru")
-                .ExecuteAsync();
+            await Cli.Wrap("dash")
+               .WithArguments("server")
+               .WithWorkingDirectory("/home/peru/minecraft")
+               .ExecuteAsync();
         }
     }
 }
