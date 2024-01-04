@@ -1,5 +1,6 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using MineBot.commands;
 using MineBot.config;
 using Newtonsoft.Json;
@@ -30,7 +31,7 @@ namespace MineBot
             //Apply bot config
             Client = new DiscordClient(discordConfig);
 
-            Client.Ready += Client_Ready;
+            Client.Ready += Client_Ready;          
 
             var commandsConfig = new CommandsNextConfiguration()
             {
@@ -49,7 +50,7 @@ namespace MineBot
         }
 
         private static Task Client_Ready(DiscordClient sender, DSharpPlus.EventArgs.ReadyEventArgs args)
-        {
+        {        
             return Task.CompletedTask;
         }
     }

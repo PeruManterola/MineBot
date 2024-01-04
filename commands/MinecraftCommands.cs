@@ -63,7 +63,10 @@ namespace MineBot.commands
         public async Task StopServer(CommandContext ctx)
         {
             ctx.Channel.SendMessageAsync("Trying to shutdown server");
-            await Cli.Wrap("stop").WithWorkingDirectory("/home/peru/minecraft/").ExecuteAsync();
+            await Cli.Wrap("dash")
+                .WithArguments("stop")
+                .WithWorkingDirectory("/home/peru/minecraft")
+                .ExecuteAsync();
         }
     }
 }
