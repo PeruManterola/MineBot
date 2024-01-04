@@ -68,5 +68,27 @@ namespace MineBot.commands
                 .WithWorkingDirectory("/home/peru/minecraft")
                 .ExecuteAsync();
         }
+
+        [Command("startServer")]
+        [RequireRoles(RoleCheckMode.MatchNames, "Minecrafters")]
+        public async Task StartServer(CommandContext ctx)
+        {
+            var statusMessage = new DiscordEmbedBuilder
+            {
+                Title = $"Starting Server...",
+                Description = "This might take a few minutes, the Bot won't work for a minute as well.",
+                Color = DiscordColor.SpringGreen
+            };
+            
+
+            await Cli.Wrap("sudo")
+                .WithArguments("reboot")
+                .WithCredentials(creds => creds
+                .SetUserName("peru")
+                .SetPassword("pmfOzzy0488")
+                )
+                .WithWorkingDirectory("/home/peru")
+                .ExecuteAsync();
+        }
     }
 }
