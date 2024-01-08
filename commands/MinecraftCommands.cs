@@ -93,8 +93,13 @@ namespace MineBot.commands
 
             await ctx.Channel.SendMessageAsync(embed: statusMessage);
 
-            await Cli.Wrap("dash")
-               .WithArguments("server")
+            await Cli.Wrap("screen")
+               .WithArguments(args => args
+                    .Add("-s")
+                    .Add("Pinecraft")
+                    .Add("dash")
+                    .Add("server")
+               )
                .WithCredentials(creds => creds
                     .SetUserName("peru")
                     .SetPassword("pmfOzzy0488")
