@@ -1,6 +1,8 @@
-﻿using DSharpPlus;
+﻿using CliWrap;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using MineBot.commands;
 using MineBot.config;
 using Newtonsoft.Json;
@@ -31,7 +33,8 @@ namespace MineBot
             //Apply bot config
             Client = new DiscordClient(discordConfig);
 
-            Client.Ready += Client_Ready;          
+            Client.Ready += Client_Ready;
+            Client.ComponentInteractionCreated += ButtonPressed;
 
             var commandsConfig = new CommandsNextConfiguration()
             {
@@ -47,6 +50,31 @@ namespace MineBot
 
             await Client.ConnectAsync();
             await Task.Delay(-1);
+        }
+
+        private static async Task StopServer()
+        {
+            await Cli.Wrap("dash")
+                            .WithArguments("stop")
+                            .WithWorkingDirectory("/home/peru/minecraft")
+                            .ExecuteAsync();
+        }
+
+        private static async Task ButtonPressed(DiscordClient sender, DSharpPlus.EventArgs.ComponentInteractionCreateEventArgs args)
+        {
+            switch (args.Interaction.Data.CustomId)
+            {
+                case "shutdown":
+                    await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, new DiscordInteractionResponseBuilder().WithContent("Shutting down server..."));
+                    await StopServer();
+                    break;
+                case "cancel":
+                    await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, new DiscordInteractionResponseBuilder().WithContent("Server shutdown Canceled"));
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private static Task Client_Ready(DiscordClient sender, DSharpPlus.EventArgs.ReadyEventArgs args)

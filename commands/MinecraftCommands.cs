@@ -1,4 +1,5 @@
 ﻿using CliWrap;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
@@ -58,16 +59,26 @@ namespace MineBot.commands
 
         }
 
-        [Command("stopServer")]
+        [Command("stopserver")]
         [RequireRoles(RoleCheckMode.MatchNames, "Minecrafters")]
         public async Task StopServer(CommandContext ctx)
         {
-            await ctx.Channel.SendMessageAsync("Trying to shutdown server");
-            await Cli.Wrap("dash")
-                .WithArguments("stop")
-                .WithWorkingDirectory("/home/peru/minecraft")
-                .ExecuteAsync();
+            DiscordButtonComponent confirmButton = new DiscordButtonComponent(ButtonStyle.Danger, "shutdown", "SHUTDOWN");
+            DiscordButtonComponent denyButton = new DiscordButtonComponent(ButtonStyle.Secondary, "cancel", "Cancel");
+
+
+            var message = new DiscordMessageBuilder()
+                .AddEmbed(new DiscordEmbedBuilder()
+                .WithColor(DiscordColor.SpringGreen)
+                .WithTitle("Are you sure you want to **SHUTDOWN** the server?")
+                )
+                .AddComponents(confirmButton, denyButton); 
+
+            await ctx.Channel.SendMessageAsync(message);
+            //await StopServer();
         }
+
+        
 
         [Command("startServer")]
         [RequireRoles(RoleCheckMode.MatchNames, "Minecrafters")]
@@ -84,6 +95,11 @@ namespace MineBot.commands
 
             await Cli.Wrap("dash")
                .WithArguments("server")
+               .WithCredentials(creds => creds
+                    .SetUserName("peru")
+                    .SetPassword("pmfOzzy0488")
+                    .LoadUserProfile()
+                )
                .WithWorkingDirectory("/home/peru/minecraft")
                .ExecuteAsync();
         }
