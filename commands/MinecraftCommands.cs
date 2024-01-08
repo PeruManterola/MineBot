@@ -97,15 +97,14 @@ namespace MineBot.commands
                .WithArguments(args => args
                     .Add("-s")
                     .Add("Pinecraft")
-                    .Add("dash")
-                    .Add("server")
+                    .Add("~/minecraft/server")
                )
                .WithCredentials(creds => creds
                     .SetUserName("peru")
                     .SetPassword("pmfOzzy0488")
                     .LoadUserProfile()
                 )
-               .WithWorkingDirectory("/home/peru/minecraft")
+               .WithWorkingDirectory("/home/peru")
                .ExecuteAsync();
         }
     }
